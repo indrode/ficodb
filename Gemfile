@@ -17,6 +17,13 @@ group :assets do
   gem 'uglifier'
 end
 
+gem "rspec-rails", :group => [:test, :development]
+group :test do
+  gem "factory_girl_rails"
+  gem "capybara"
+  gem "guard-rspec"
+end
+
 gem 'jquery-rails'
 gem 'haml'
 
