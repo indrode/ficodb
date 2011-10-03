@@ -8,6 +8,8 @@ gem 'rails', '3.1.0'
 gem 'mysql2'
 gem 'rake', '0.9.2'
 gem 'json'
+gem 'execjs'
+gem 'therubyracer'
 
 # Gems used only for assets and not required
 # in production environments by default.
