@@ -1,4 +1,5 @@
 require 'capistrano/ext/multistage'
+load "deploy/assets"
 
 set :application, "ficodb"
 set :repository,  "git@github.com:indrode/ficodb.git"
