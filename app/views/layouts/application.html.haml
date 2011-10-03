@@ -3,7 +3,7 @@
   %head
     %title Ficodb
     = stylesheet_link_tag :application
-    = javascript_include_tag :application
+    -#= javascript_include_tag :application
     = csrf_meta_tags
   %body
     - flash.each do |name, msg|
@@ -11,4 +11,7 @@
     = yield
     
     %app_env
-      = "Env: #{Rails.env}" unless Rails.env == "production"
+      - unless Rails.env == "production"
+        = "Env:  #{Rails.env}"
+      %br
+        = "Ruby: #{RUBY_VERSION}"
