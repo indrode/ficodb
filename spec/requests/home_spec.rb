@@ -8,6 +8,6 @@ describe "Home" do
   
   it "should be the homepage" do
     visit root_path
-    page.should have_content('Ficodb')
+    page.should have_selector("h1.home")
   end
 end
