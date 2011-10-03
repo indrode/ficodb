@@ -1,5 +1,4 @@
 require 'capistrano/ext/multistage'
-load "deploy/assets"
 
 set :application, "ficodb"
 set :repository,  "git@github.com:indrode/ficodb.git"
@@ -19,8 +18,15 @@ set :deploy_via, :remote_cache
 # if you're still using the script/reapear helper you will need
 # these http://github.com/rails/irs_process_scripts
 
-after "deploy", "deploy:bundle_gems"
-after "deploy:bundle_gems", "deploy:restart"
+namespace :assets do
+  task :precompile, :roles => :web do
+    run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:precompile"
+  end
+
+  task :cleanup, :roles => :web do
+    run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:clean"
+  end
+end
 
 namespace :deploy do
   task :bundle_gems do
@@ -33,3 +39,7 @@ namespace :deploy do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 end
+
+after :deploy, "deploy:bundle_gems"
+after "deploy:bundle_gems", "deploy:restart"
+after :deploy, "assets:precompile"
