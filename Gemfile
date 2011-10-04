@@ -6,7 +6,7 @@ gem 'rails', '3.1.0'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem 'rake', '0.9.2'
+gem 'rake'
 gem 'json'
 gem 'execjs'
 gem 'therubyracer'
