@@ -1,4 +1,5 @@
 require 'capistrano/ext/multistage'
+require 'bundler/capistrano'
 require File.dirname(__FILE__) + '/capistrano_database.rb'
 
 set :application, "ficodb"
