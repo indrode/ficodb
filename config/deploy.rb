@@ -34,10 +34,10 @@ set(:previous_revision) { capture("cd #{current_path}; git rev-parse --short HEA
 
 default_environment["RAILS_ENV"] = 'production'
 
-# Use our ruby-1.9.2-p290@my_site gemset
-default_environment["PATH"]         = "--"
-default_environment["GEM_HOME"]     = "--"
-default_environment["GEM_PATH"]     = "--"
+# Use our ruby-1.9.2-p290@rails3 gemset
+default_environment["PATH"]         = "/usr/local/rvm/gems/ruby-1.9.2-p290@rails3/bin:/usr/local/rvm/gems/ruby-1.9.2-p290@global/bin:/usr/local/rvm/rubies/ruby-1.9.2-p290/bin:/usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games"
+default_environment["GEM_HOME"]     = "/usr/local/rvm/gems/ruby-1.9.2-p290@rails3"
+default_environment["GEM_PATH"]     = "/usr/local/rvm/gems/ruby-1.9.2-p290@rails3:/usr/local/rvm/gems/ruby-1.9.2-p290@global"
 default_environment["RUBY_VERSION"] = "ruby-1.9.2-p290"
 
 default_run_options[:shell] = 'bash'
@@ -107,7 +107,7 @@ namespace :deploy do
 
   desc "Zero-downtime restart of Unicorn"
   task :restart, :except => { :no_release => true } do
-    run "kill -s USR2 `cat /tmp/unicorn.my_site.pid`"
+    run "kill -s USR2 `cat /tmp/unicorn.ficodb.pid`"
   end
 
   desc "Start unicorn"
@@ -117,7 +117,7 @@ namespace :deploy do
 
   desc "Stop unicorn"
   task :stop, :except => { :no_release => true } do
-    run "kill -s QUIT `cat /tmp/unicorn.my_site.pid`"
+    run "kill -s QUIT `cat /tmp/unicorn.ficodb.pid`"
   end  
 
   namespace :rollback do
