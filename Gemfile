@@ -29,6 +29,8 @@ end
 
 group :development do
   gem 'growl'
+  gem 'capistrano'
+  gem 'capistrano-ext'
 end
 
 gem 'jquery-rails'
@@ -37,10 +39,6 @@ gem 'haml-rails'
 
 # Use unicorn as the web server
 gem 'unicorn'
-
-# Deploy with Capistrano
-gem 'capistrano'
-gem 'capistrano-ext'
 
 # To use debugger
 # gem 'ruby-debug'
