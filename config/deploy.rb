@@ -14,8 +14,6 @@ set :stages, %w(production staging testing)
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
 set :user, "francis"
-set :group, "staff"
-
 set :use_sudo, false
 set :port, 52520
 set :deploy_via, :remote_cache
