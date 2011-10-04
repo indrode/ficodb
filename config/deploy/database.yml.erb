@@ -27,3 +27,17 @@ production:
   username: #{Capistrano::CLI.ui.ask("Enter MySQL username: ")}
   password: #{Capistrano::CLI.ui.ask("Enter MySQL database password: ")}
   <<: *base
+
+staging:
+  adapter: mysql2
+  database: frog110_staging
+  username: #{Capistrano::CLI.ui.ask("Enter MySQL username: ")}
+  password: #{Capistrano::CLI.ui.ask("Enter MySQL database password: ")}
+  <<: *base
+    
+testing:
+  adapter: mysql2
+  database: frog110_testing
+  username: #{Capistrano::CLI.ui.ask("Enter MySQL username: ")}
+  password: #{Capistrano::CLI.ui.ask("Enter MySQL database password: ")}
+  <<: *base

@@ -89,6 +89,8 @@
 # This is why I use the Capistrano::CLI utility.
 #
 
+set :template_dir, "config/deploy"
+
 unless Capistrano::Configuration.respond_to?(:instance)
   abort "This extension requires Capistrano 2"
 end
