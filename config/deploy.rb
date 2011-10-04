@@ -11,6 +11,7 @@ set :user, "francis"
 set :use_sudo, false
 set :port, 52520
 set :deploy_via, :remote_cache
+set :template_dir, "config/deploy"
 
 namespace :assets do
   task :precompile, :roles => :web do
