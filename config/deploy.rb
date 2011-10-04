@@ -1,5 +1,5 @@
 require 'capistrano/ext/multistage'
-require "capistrano_database"
+require File.dirname(__FILE__) + '/capistrano_database.rb'
 
 set :application, "ficodb"
 set :default_stage, "staging"
@@ -29,7 +29,7 @@ namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "cd #{deploy_to}/current && thin start"
+    run "cd #{deploy_to}/current && thin start --servers 3"
   end
 end
 
