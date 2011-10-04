@@ -1,22 +1,15 @@
 require 'capistrano/ext/multistage'
+require "capistrano_database"
 
 set :application, "ficodb"
-set :repository,  "git@github.com:indrode/ficodb.git"
-
 set :default_stage, "staging"
 set :stages, %w(production staging testing)
-
 set :scm, :git
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
-
+set :repository,  "git@github.com:indrode/ficodb.git"
 set :user, "francis"
 set :use_sudo, false
 set :port, 52520
 set :deploy_via, :remote_cache
-
-# If you are using Passenger mod_rails uncomment this:
-# if you're still using the script/reapear helper you will need
-# these http://github.com/rails/irs_process_scripts
 
 namespace :assets do
   task :precompile, :roles => :web do
@@ -30,7 +23,7 @@ end
 
 namespace :deploy do
   task :bundle_gems do
-    run "cd #{deploy_to}/current && RAILS_ENV=production bundle exec bundle install --path vendor/gems"
+    run "cd #{deploy_to}/current && bundle install --path vendor/gems"
   end
   
   task :start do ; end
