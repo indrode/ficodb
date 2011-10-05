@@ -41,7 +41,7 @@ namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "cd #{deploy_to}/current && RAILS_ENV=#{rails_env} bundle exec thin restart --servers 3"
+    run "cd #{deploy_to}/current && RAILS_ENV=#{rails_env} bundle exec thin restart --servers #{num_instances}"
   end
 end
 
