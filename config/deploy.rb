@@ -1,6 +1,5 @@
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
-#require File.dirname(__FILE__) + '/capistrano_database.rb'
 
 set :application, "ficodb"
 set :default_stage, "staging"
@@ -12,6 +11,14 @@ set :use_sudo, false
 set :port, 52520
 set :deploy_via, :remote_cache
 set :template_dir, "config/deploy"
+
+namespace :db do  
+  task :db_config, :except => { :no_release => true }, :role => :app do  
+    run "cp -f ~/ficodb/shared/database.yml #{release_path}/config/database.yml"
+  end  
+end  
+  
+after "deploy:finalize_update", "db:db_config"
 
 namespace :assets do
   task :precompile, :roles => :web do
@@ -28,10 +35,6 @@ namespace :deploy do
     run "cd #{deploy_to}/current && RAILS_ENV=#{rails_env} bundle install --path vendor/gems"
   end
   
-  task :symlink_db do
-    run "ln -sfn ~/ficodb/shared/database.yml #{deploy_to}/current/config/database.yml"
-  end
-  
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
@@ -41,5 +44,4 @@ end
 
 after :deploy, "deploy:bundle_gems"
 after "deploy:bundle_gems", "deploy:restart"
-after "deploy:symlink_db", "deploy:restart"
 after :deploy, "assets:precompile"
