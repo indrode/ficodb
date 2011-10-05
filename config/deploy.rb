@@ -1,6 +1,6 @@
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
-require File.dirname(__FILE__) + '/capistrano_database.rb'
+#require File.dirname(__FILE__) + '/capistrano_database.rb'
 
 set :application, "ficodb"
 set :default_stage, "staging"
@@ -28,6 +28,10 @@ namespace :deploy do
     run "cd #{deploy_to}/current && bundle install --path vendor/gems"
   end
   
+  task :symlink_db do
+    run "ln -sfn ~/ficodb/shared/database.yml #{deploy_to}/current/config/database.yml"
+  end
+  
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
@@ -36,5 +40,6 @@ namespace :deploy do
 end
 
 after :deploy, "deploy:bundle_gems"
-after "deploy:bundle_gems", "deploy:restart"
+after "deploy:bundle_gems", "deploy:symlink_db"
+after "deploy:symlink_db", "deploy:restart"
 after :deploy, "assets:precompile"
