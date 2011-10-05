@@ -15,17 +15,17 @@ set :template_dir, "config/deploy"
 
 namespace :assets do
   task :precompile, :roles => :web do
-    run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:precompile"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
   end
 
   task :cleanup, :roles => :web do
-    run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:clean"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake assets:clean"
   end
 end
 
 namespace :deploy do
   task :bundle_gems do
-    run "cd #{deploy_to}/current && bundle install --path vendor/gems"
+    run "cd #{deploy_to}/current && RAILS_ENV=#{rails_env} bundle install --path vendor/gems"
   end
   
   task :symlink_db do
@@ -35,11 +35,11 @@ namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "cd #{deploy_to}/current && thin start --servers 3"
+    run "cd #{deploy_to}/current && RAILS_ENV=#{rails_env} bundle exec thin restart --servers 3"
   end
 end
 
 after :deploy, "deploy:bundle_gems"
-after "deploy:bundle_gems", "deploy:symlink_db"
+after "deploy:bundle_gems", "deploy:restart"
 after "deploy:symlink_db", "deploy:restart"
 after :deploy, "assets:precompile"
