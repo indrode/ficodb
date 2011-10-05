@@ -1,5 +1,7 @@
+$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
+require "rvm/capistrano"
 
 set :application, "ficodb"
 set :default_stage, "staging"
@@ -11,13 +13,14 @@ set :use_sudo, false
 set :port, 52520
 set :deploy_via, :remote_cache
 set :template_dir, "config/deploy"
+set :rvm_ruby_string, '1.9.2@rails3'
 
-namespace :db do  
-  task :db_config, :except => { :no_release => true }, :role => :app do  
+namespace :db do
+  task :db_config, :except => { :no_release => true }, :role => :app do
     run "cp -f ~/ficodb/shared/database.yml #{release_path}/config/database.yml"
-  end  
-end  
-  
+  end
+end
+
 after "deploy:finalize_update", "db:db_config"
 
 namespace :assets do
